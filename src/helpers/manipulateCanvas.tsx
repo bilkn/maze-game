@@ -17,11 +17,13 @@ export default function manipulateCanvas() {
     let y = rows * size;
     for (let row = 0; row < rows; row++) {
       x = 0;
+      const inner = [];
       for (let col = 0; col < cols; col++) {
-        cells.push(Cell(x, y, size));
+        inner.push(Cell(x, y, size));
         x += size;
       }
       y -= size;
+      cells.push(inner);
     }
     return cells;
   }
@@ -32,6 +34,8 @@ export default function manipulateCanvas() {
     size: number;
   }
 
+  
+
   function Cell(x: number, y: number, size: number): iCell {
     return {
       x,
@@ -40,12 +44,14 @@ export default function manipulateCanvas() {
     };
   }
 
-  function drawCells(ctx: CanvasRenderingContext2D, cells: Array<iCell>) {
+  function drawCells(ctx: CanvasRenderingContext2D, cells: Array<Array<iCell>>) {
     let duration = 0;
-    cells.reverse().forEach((cell) => {
-      const { x, y, size } = cell;
-      setTimeout(() => ctx.strokeRect(x, y, size, size), duration);
-      duration += 5;
+    cells.reverse().forEach((row) => {
+      row.forEach((cell) => {
+        const { x, y, size } = cell;
+        setTimeout(() => ctx.strokeRect(x, y, size, size), duration);
+        duration += 5;
+      });
     });
   }
   return { start, createCells };

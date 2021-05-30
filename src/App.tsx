@@ -1,10 +1,8 @@
-import React from 'react';
 import './App.css';
+import { Canvas } from './components';
 
 function App() {
-  return (
-  null
-  );
+ return <Canvas width={300} height={300}></Canvas>
 }
 
 export default App;

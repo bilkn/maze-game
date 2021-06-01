@@ -2,7 +2,11 @@ import './App.css';
 import { Canvas } from './components';
 
 function App() {
- return <Canvas width={300} height={300}></Canvas>
+ return (
+   <div className="container">
+     <Canvas width={500} height={500}></Canvas>
+   </div>
+ );
 }
 
 export default App;

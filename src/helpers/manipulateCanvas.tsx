@@ -11,7 +11,7 @@ export default function manipulateCanvas() {
     }
   }
 
-  function createCells(cols: number, rows: number, size: number): Object {
+  function createCells(rows: number, cols: number, size: number): Object {
     const cells: Object[] = [];
     let x = 0;
     let y = rows * size;

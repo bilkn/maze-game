@@ -1,12 +1,12 @@
 export default function manipulateCanvas() {
   function start(rows: number, cols: number): void {
-    const canvas = document.querySelector('.canvas') as HTMLCanvasElement;
+    const canvas = document.querySelector(".canvas") as HTMLCanvasElement;
     if (canvas) {
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext("2d");
       if (ctx) {
-        ctx.strokeStyle = 'black';
-        const cells: any = createCells(rows, cols, 20); // change any type.
-        drawCells(ctx, cells);
+        const cells: any = createCells(rows, cols, 20);
+      /*   drawCells(ctx, cells); */
+        drawWalls(ctx, cells);
       }
     }
   }
@@ -25,6 +25,7 @@ export default function manipulateCanvas() {
       y -= size;
       cells.push(inner);
     }
+    console.log(cells)
     return cells;
   }
 
@@ -32,20 +33,34 @@ export default function manipulateCanvas() {
     x: number;
     y: number;
     size: number;
+    walls: {
+      top: boolean;
+      bottom: boolean;
+      left: boolean;
+      right: boolean;
+    };
   }
-
-  
 
   function Cell(x: number, y: number, size: number): iCell {
     return {
       x,
       y,
       size,
+      walls: {
+        top: true,
+        bottom: true,
+        left: true,
+        right: true,
+      },
     };
   }
 
-  function drawCells(ctx: CanvasRenderingContext2D, cells: Array<Array<iCell>>) {
+  function drawCells(
+    ctx: CanvasRenderingContext2D,
+    cells: Array<Array<iCell>>
+  ) {
     let duration = 0;
+    ctx.strokeStyle = "white";
     cells.reverse().forEach((row) => {
       row.forEach((cell) => {
         const { x, y, size } = cell;
@@ -54,5 +69,37 @@ export default function manipulateCanvas() {
       });
     });
   }
+
+  function drawWalls(
+    ctx: CanvasRenderingContext2D,
+    cells: Array<Array<iCell>>
+  ) {
+    let duration = 0;
+    ctx.fillStyle = "black";
+    cells.reverse().forEach((row) => {
+      row.forEach((cell) => {
+        const { x, y, size } = cell;
+        const { top, bottom, left, right } = cell.walls;
+        let callback:Function | null | void = null;
+        if (top) {
+          callback = ctx.fillRect(x, y, size, 1);
+        }
+        if (bottom) {
+          callback = ctx.fillRect(x, (y-size+1), size, 1);
+        }
+        if (left) {
+          callback = ctx.fillRect(x, y, 1, size);
+        }
+        if (right) {
+          callback = ctx.fillRect(x + size - 1, y, 1, size);
+        }
+        if(typeof callback === "function") {
+          setTimeout(callback, duration);
+          duration += 5;
+        }
+      });
+    });
+  }
+
   return { start, createCells };
 }

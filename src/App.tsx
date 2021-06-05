@@ -4,7 +4,7 @@ import { Canvas } from './components';
 function App() {
  return (
    <div className="container">
-     <Canvas width={500} height={500}></Canvas>
+     <Canvas width={400} height={400}></Canvas>
    </div>
  );
 }

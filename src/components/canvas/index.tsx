@@ -11,7 +11,7 @@ interface Props {
 function Canvas({ children, width, height }: Props): JSX.Element {
   useEffect(() => {
    const {start} = manipulateCanvas();
-   start(20,30);
+   start(20,20);
   }, []);
   return (
     <canvas className="canvas" width={width} height={height}>

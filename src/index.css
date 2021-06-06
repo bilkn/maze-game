@@ -8,7 +8,7 @@
 
 html,
 body {
-  background: #f3f5fb;
+  background: gainsboro;
   color: #333;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -18,7 +18,7 @@ body {
 }
 
 #root {
-  min-height: calc(100vh - 72px);
+  min-height: 100vh;
   position: relative;
 }
 

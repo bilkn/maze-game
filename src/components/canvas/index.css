@@ -1,4 +1,31 @@
 .canvas {
-    margin: auto;
-    margin-top: 3rem;
+  margin: auto;
+  margin-top: 3rem;
+}
+
+.canvas__box {
+  margin: auto;
+  margin-top: 5rem;
+}
+
+.canvas__btn,
+.canvas__input {
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 0.7rem;
+}
+
+.canvas__btn {
+  background: #5c5c5c;
+  color: white;
+  cursor: pointer;
+  transition: 150ms;
+}
+
+.canvas__btn:hover {
+    background: #5c5c5cda;
+}
+
+.canvas__input {
+  margin-right: 1rem;
 }

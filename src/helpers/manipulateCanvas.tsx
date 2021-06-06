@@ -1,12 +1,12 @@
 export default function manipulateCanvas() {
   function start(rows: number, cols: number): void {
-    const canvas = document.querySelector(".canvas") as HTMLCanvasElement;
+    const canvas = document.querySelector('.canvas') as HTMLCanvasElement;
     if (canvas) {
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
       if (ctx) {
         const cells: any = createCells(rows, cols, 20);
-      /*   drawCells(ctx, cells); */
-        drawWalls(ctx, cells);
+        drawCells(ctx, cells);
+        /*  drawWalls(ctx, cells); */
       }
     }
   }
@@ -25,7 +25,6 @@ export default function manipulateCanvas() {
       y -= size;
       cells.push(inner);
     }
-    console.log(cells)
     return cells;
   }
 
@@ -60,12 +59,15 @@ export default function manipulateCanvas() {
     cells: Array<Array<iCell>>
   ) {
     let duration = 0;
-    ctx.strokeStyle = "white";
+    ctx.strokeStyle = 'black';
     cells.reverse().forEach((row) => {
       row.forEach((cell) => {
         const { x, y, size } = cell;
-        setTimeout(() => ctx.strokeRect(x, y, size, size), duration);
-        duration += 5;
+        const timeout = setTimeout(() => {
+          clearTimeout(timeout);
+          ctx.strokeRect(x, y, size, size);
+        }, duration);
+        duration += 1;
       });
     });
   }
@@ -75,17 +77,17 @@ export default function manipulateCanvas() {
     cells: Array<Array<iCell>>
   ) {
     let duration = 0;
-    ctx.fillStyle = "black";
+    ctx.fillStyle = 'black';
     cells.reverse().forEach((row) => {
       row.forEach((cell) => {
         const { x, y, size } = cell;
         const { top, bottom, left, right } = cell.walls;
-        let callback:Function | null | void = null;
+        let callback: Function | null | void = null;
         if (top) {
           callback = ctx.fillRect(x, y, size, 1);
         }
         if (bottom) {
-          callback = ctx.fillRect(x, (y-size+1), size, 1);
+          callback = ctx.fillRect(x, y - size + 1, size, 1);
         }
         if (left) {
           callback = ctx.fillRect(x, y, 1, size);
@@ -93,7 +95,7 @@ export default function manipulateCanvas() {
         if (right) {
           callback = ctx.fillRect(x + size - 1, y, 1, size);
         }
-        if(typeof callback === "function") {
+        if (typeof callback === 'function') {
           setTimeout(callback, duration);
           duration += 5;
         }

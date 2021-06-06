@@ -1,10 +1,10 @@
 export default function manipulateCanvas() {
-  function start(rows: number, cols: number): void {
+  function start(rows: number, cols: number,cellSize:number): void {
     const canvas = document.querySelector('.canvas') as HTMLCanvasElement;
     if (canvas) {
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        const cells: any = createCells(rows, cols, 20);
+        const cells: any = createCells(rows, cols, cellSize);
         drawCells(ctx, cells);
         /*  drawWalls(ctx, cells); */
       }
@@ -103,5 +103,15 @@ export default function manipulateCanvas() {
     });
   }
 
-  return { start, createCells };
+  function findCellSize(cols:number,rows:number) {
+    const min = Math.min(cols,rows);
+    const max = Math.max(cols,rows);
+    const area = cols*rows;
+    for(let n = min; n <= rows; max) {
+      if(area % min === 0) return min;
+    }
+    return 0;
+  }
+
+  return { start, createCells,findCellSize };
 }

@@ -20,10 +20,10 @@ function Canvas({ rows, cols }: CanvasProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    console.log("start")
-    const { start } = manipulateCanvas();
-    setSize({ width: rows * cols, height: rows * cols });
-    start(rows, cols);
+    const { start,findCellSize } = manipulateCanvas();
+    const cellSize = findCellSize(cols,rows);
+    setSize({ width: cols*cellSize, height: rows * cellSize });
+    start(rows, cols,cellSize);
   }, [size.width,size.height, cols, rows]);
   return (
     <canvas className="canvas" width={size.width} height={size.height}></canvas>

@@ -1,1 +1,1 @@
-# Maze Game 
+# Maze Game React App
